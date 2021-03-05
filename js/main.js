@@ -15,15 +15,28 @@ const bird = {
     dy: 33, //destino Y - destination Y
     dWidth: 33, //destino largura - destination width
     dHeight: 24, //destino Altura = Destination height
+    draw(){
+        ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
+    }
+}
+const ground = {
+    sx: 0, //origem X - source x
+    sy: 610, //origem Y - source y
+    sWidth: 224, //origem largura - source width
+    sHeight: 112, //origem altura - source height
+    dx: 0, //destino X - destination X
+    dy: canvas.height -112, //destino Y - destination Y
+    dWidth: 224, //destino largura - destination width
+    dHeight: 112, //destino Altura = Destination height
+    draw(){
+        ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx, ground.dy, ground.dWidth, ground.dHeight);
+        ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx + ground.dHeight, ground.dy, ground.dWidth, ground.dHeight);
+    }
 }
 
-
-console.log("adjfkjasfj")
 function loop(){
-    ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
-    /*ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-    disponível em : https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-    */
+    bird.draw();
+    ground.draw();
     requestAnimationFrame(loop);
 }
 
