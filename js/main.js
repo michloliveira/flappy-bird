@@ -15,8 +15,30 @@ const bird = {
     dy: 33, //destino Y - destination Y
     dWidth: 33, //destino largura - destination width
     dHeight: 24, //destino Altura = Destination height
+    gravity: 0.25,
+    velocity: 0,
     draw(){
         ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
+        //physic-------------------------------
+        if(inicio == false){
+            if(jump == true){
+                bird.velocity = 0;
+                bird.dy = bird.dy - 60;
+                jump = false;          
+            }
+            bird.velocity = bird.velocity + bird.gravity;
+            bird.dy = bird.dy + bird.velocity;
+        }
+        else{
+            if(jump == true){
+                inicio = false;
+            }
+            bird.dy = 33;
+            bird.velocity = 0;
+            ctx.drawImage(sprites, 134, 0, 174, 152, canvas.width/2 - 87, 110, 174, 152);
+        }
+        //bird.dWidth = bird.dWidth + bird.velocity;
+        //console.log(bird.velocity);
     }
 }
 const ground = {
@@ -49,11 +71,16 @@ const background = {
         ctx.drawImage(sprites, background.sx, background.sy, background.sWidth, background.sHeight, background.dx + ground.dHeight, background.dy, background.dWidth, background.dHeight);
     }
 }
-
+let inicio = true; //tela de inicio
+let jump = false; //pular
 function loop(){
+    window.addEventListener("click", function(){
+            jump = true;
+            console.log("pulou!")
+    })
     background.draw();
-    bird.draw();
     ground.draw();
+    bird.draw();
     requestAnimationFrame(loop);
 }
 
