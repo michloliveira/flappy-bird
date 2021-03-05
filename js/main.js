@@ -21,18 +21,27 @@ const bird = {
     draw(){
         ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
         //physic-------------------------------
-        if(inicio == false){
-            if(jump == true){
-                bird.velocity = - bird.pulo;
-                bird.dy = bird.dy + bird.velocity;
-                jump = false;          
+        if(inicio == false){//Jogando...
+            console.log(bird.dy);
+            console.log("chão:" + ground.dy)
+            if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão
+                if(jump == true){
+                    bird.velocity = - bird.pulo;
+                    bird.dy = bird.dy + bird.velocity;
+                    jump = false;          
+                }
+                else{
+                    bird.velocity = bird.velocity + bird.gravity;
+                    bird.dy = bird.dy + bird.velocity;
+                }
             }
-            else{
-                bird.velocity = bird.velocity + bird.gravity;
-                bird.dy = bird.dy + bird.velocity;
+            else{ // morreu
+                setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                    inicio = true;
+                },2000);
             }
         }
-        else{
+        else{ //Tela de Início
             if(jump == true){
                 inicio = false;
             }
