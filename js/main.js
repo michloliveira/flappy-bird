@@ -17,17 +17,20 @@ const bird = {
     dHeight: 24, //destino Altura = Destination height
     gravity: 0.25,
     velocity: 0,
+    pulo: 4.5,
     draw(){
         ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
         //physic-------------------------------
         if(inicio == false){
             if(jump == true){
-                bird.velocity = 0;
-                bird.dy = bird.dy - 60;
+                bird.velocity = - bird.pulo;
+                bird.dy = bird.dy + bird.velocity;
                 jump = false;          
             }
-            bird.velocity = bird.velocity + bird.gravity;
-            bird.dy = bird.dy + bird.velocity;
+            else{
+                bird.velocity = bird.velocity + bird.gravity;
+                bird.dy = bird.dy + bird.velocity;
+            }
         }
         else{
             if(jump == true){
@@ -37,8 +40,6 @@ const bird = {
             bird.velocity = 0;
             ctx.drawImage(sprites, 134, 0, 174, 152, canvas.width/2 - 87, 110, 174, 152);
         }
-        //bird.dWidth = bird.dWidth + bird.velocity;
-        //console.log(bird.velocity);
     }
 }
 const ground = {
@@ -76,7 +77,7 @@ let jump = false; //pular
 function loop(){
     window.addEventListener("click", function(){
             jump = true;
-            console.log("pulou!")
+            //console.log("pulou!")
     })
     background.draw();
     ground.draw();
