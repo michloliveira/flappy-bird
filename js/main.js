@@ -11,7 +11,7 @@ const bird = {
         { sx: 0,sy: 0}, //asa para cima
         { sx: 0,sy: 26}, //asa para o meio
         { sx: 0,sy: 52},  //asa para baixo
-        { sx: 0,sy: 26}, //asa para o meio
+        { sx: 0,sy: 26}, //asa para o meio        
     ],
     frame: 0, // frame do bird
     fps: 0, //controle do frame
@@ -55,6 +55,7 @@ const bird = {
             else{ // morreu
                 ground.move = 0; //para o chão;
                 setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                    inicio = true;
                     ground.move = 1; //para o chão;
                     inicio = true;
                 },2000);
@@ -104,14 +105,29 @@ const background = {
     dWidth: 275, //destino largura - destination width
     dHeight: 204, //destino Altura = Destination height
     draw(){ // function draw
-        ctx.fillStyle = "#70C5CE"
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#70C5CE" //cor de fundo
+        ctx.fillRect(0, 0, canvas.width, canvas.height); // x, y , largura , altura
         ctx.drawImage(sprites, background.sx, background.sy, background.sWidth, background.sHeight, background.dx, background.dy, background.dWidth, background.dHeight);
         ctx.drawImage(sprites, background.sx, background.sy, background.sWidth, background.sHeight, background.dx + ground.dHeight, background.dy, background.dWidth, background.dHeight);
     }
 }
+const pipe = { // cano
+    sx: 0, //origem X - source x
+    sy: 169 ,//origem Y - source y
+    sWidth: 104, //origem largura - source width
+    sHeight: 400, //origem altura - source height
+    dx: 100, //destino X - destination X
+    dy: 0, //destino Y - destination Y
+    dWidth: 104, //destino largura - destination width
+    dHeight: 400, //destino Altura = Destination height
+    draw(){
+        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx, pipe.dy, pipe.dWidth, pipe.dHeight);
+    }
+}
+
 let inicio = true; //tela de inicio
 let jump = false; //pular
+
 function loop(){
     window.addEventListener("click", function(){
             jump = true;
@@ -120,6 +136,7 @@ function loop(){
     background.draw();
     ground.draw();
     bird.draw();
+    pipe.draw();
     requestAnimationFrame(loop);
 }
 
