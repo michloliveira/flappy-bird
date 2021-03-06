@@ -7,8 +7,14 @@ const canvas = document.querySelector('canvas'); //retorna o primeiro elemento d
 const ctx = canvas.getContext('2d');
 
 const bird = {
-    sx: 0, //origem X - source x
-    sy: 0, //origem Y - source y
+    sXY: [  // bird frames
+        { sx: 0,sy: 0}, //asa para cima
+        { sx: 0,sy: 26}, //asa para o meio
+        { sx: 0,sy: 52},  //asa para baixo
+        { sx: 0,sy: 26}, //asa para o meio
+    ],
+    frame: 0, // frame do bird
+    fps: 0, //controle do frame
     sWidth: 33, //origem largura - source width
     sHeight: 24, //origem altura - source height
     dx: 50, //destino X - destination X
@@ -19,11 +25,22 @@ const bird = {
     velocity: 0,
     pulo: 4.5,
     draw(){
-        ctx.drawImage(sprites, bird.sx, bird.sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight);
-        //physic-------------------------------
+        ctx.drawImage(sprites, bird.sXY[bird.frame].sx, bird.sXY[bird.frame].sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight); //desenha na tela
+        if(bird.fps == 10 && ground.move){ //atualiza asa do bird a cada 10 fps e se o chão estiver se movendo
+            bird.frame++;
+            if(bird.frame > 3){
+                bird.frame = 0;
+            }
+        }
+        if(bird.fps > 10){ // zera o contador de fps a cada 10 fps
+            bird.fps = 0;
+        }
+        bird.fps++; // incrementa o contador de fps
+
+        //physic---------------------------------------------------------------------------
         if(inicio == false){//Jogando...
-            console.log(bird.dy);
-            console.log("chão:" + ground.dy)
+            //console.log(bird.dy);
+            //console.log("chão:" + ground.dy)
             if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão
                 if(jump == true){
                     bird.velocity = - bird.pulo;
@@ -36,7 +53,9 @@ const bird = {
                 }
             }
             else{ // morreu
+                ground.move = 0; //para o chão;
                 setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                    ground.move = 1; //para o chão;
                     inicio = true;
                 },2000);
             }
@@ -60,9 +79,19 @@ const ground = {
     dy: canvas.height -112, //destino Y - destination Y
     dWidth: 224, //destino largura - destination width
     dHeight: 112, //destino Altura = Destination height
+    move: 1, //velocidade de movimentação do chão
+    
     draw(){
-        ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx, ground.dy, ground.dWidth, ground.dHeight);
-        ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx + ground.dHeight, ground.dy, ground.dWidth, ground.dHeight);
+            ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx, ground.dy, ground.dWidth, ground.dHeight);
+            ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx + ground.dHeight, ground.dy, ground.dWidth, ground.dHeight);
+            
+        if(ground.move == 1){ // movimenta o chão
+            ground.dx = ground.dx - ground.move;
+        }
+
+        if(ground.dx < -13){ // limite em que o cenário começa a repetir 
+            ground.dx = 0;
+        }
     }
 }
 const background = {
