@@ -127,8 +127,8 @@ const pipe = { // cano
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy, pipe.dWidth, pipe.dHeight);
         ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
 
-        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx + 100, pipe.dy, pipe.dWidth, pipe.dHeight);
-        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx + 100, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1 + 100, pipe.dy, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1 + 100, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
     }
 }
 
