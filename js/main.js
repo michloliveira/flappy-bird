@@ -159,9 +159,9 @@ function loop(){
     }
   })
     background.draw();
+    pipe.draw();
     ground.draw();
     bird.draw();
-    pipe.draw();
     requestAnimationFrame(loop);
 }
 
