@@ -112,16 +112,23 @@ const background = {
     }
 }
 const pipe = { // cano
-    sx: 0, //origem X - source x
+    sx: 52, //origem X - source x
     sy: 169 ,//origem Y - source y
-    sWidth: 104, //origem largura - source width
-    sHeight: 400, //origem altura - source height
-    dx: 100, //destino X - destination X
-    dy: 0, //destino Y - destination Y
-    dWidth: 104, //destino largura - destination width
-    dHeight: 400, //destino Altura = Destination height
+    sWidth: 52, //origem largura - source width 104
+    sHeight: 400, //origem altura - source height 400
+    dx0: 100, //destino X - destination X
+    dx1: 120, //destino X - destination X
+    dy: -90, //destino Y - destination Y
+    dWidth: 52, //destino largura - destination width
+    dHeight: 400, //destino Altura = Destination height,
     draw(){
-        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx, pipe.dy, pipe.dWidth, pipe.dHeight);
+        pipe.dy = -90 *(Math.random()+ 1);
+        
+        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
+
+        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx + 100, pipe.dy, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx + 100, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
     }
 }
 
