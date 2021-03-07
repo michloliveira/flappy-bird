@@ -116,28 +116,28 @@ const pipe = { // cano
     sy: 169 ,//origem Y - source y
     sWidth: 52, //origem largura - source width 104
     sHeight: 400, //origem altura - source height 400
-    dx0: canvas.width + 132, //destino X - destination X cano 1
-    dx1: canvas.width + 292, //destino X - destination X cano 2 //olhar amanha
+    dx0: canvas.width + 183, //destino X - destination X cano 1
+    dx1: canvas.width + 366, //destino X - destination X cano 2 //olhar amanha
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ Math.random() * (-90 - -365 + 1) + -365, Math.random() * (-90 - -365 + 1) + -365], //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    alt : [ -365, -150], //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
     draw(){
         //pipe.dy = -90 *(Math.random()+ 1);
         //Math.floor(Math.random() * (max - min + 1) + min);
         //console.log(canvas.width);
         if(pipe.dx0 == -52){
-            console.log("quando o cano desaparece o outro cano está em:" + pipe.dx1);
-            pipe.dx0 = canvas.width;
+            //console.log("quando o cano desaparece o outro cano está em:" + pipe.dx1);
+            pipe.dx0 = pipe.dx1 + 183;
         }
         if(pipe.dx1 == -52){
-            pipe.dx1 = canvas.width;
+            pipe.dx1 = pipe.dx0 + 183;
         }
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
-        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 440, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 480, pipe.dWidth, pipe.dHeight);
         
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
-        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 440, pipe.dWidth, pipe.dHeight);
+        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
         pipe.dx0--;
         pipe.dx1--;
     }
@@ -151,6 +151,13 @@ function loop(){
             jump = true;
             //console.log("pulou!")
     })
+// event = keyup or keydown
+    document.addEventListener('keydown', event => {
+        if (event.code === 'Space') {
+        //console.log('Space pressed')
+        jump = true;
+    }
+  })
     background.draw();
     ground.draw();
     bird.draw();
