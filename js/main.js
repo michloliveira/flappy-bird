@@ -122,7 +122,7 @@ const pipe = { // cano
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
     draw(){
-        pipe.dy = -90 *(Math.random()+ 1);
+        //pipe.dy = -90 *(Math.random()+ 1);
         
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy, pipe.dWidth, pipe.dHeight);
         ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.dy + 440, pipe.dWidth, pipe.dHeight);
