@@ -6,6 +6,9 @@ sprites.src = "./img/sprites.png"; //carrega a imagem base
 const canvas = document.querySelector('canvas'); //retorna o primeiro elemento do seletor buscado
 const ctx = canvas.getContext('2d');
 
+let inicio = true; //tela de inicio
+let jump = false; //pular
+
 const bird = {
     sXY: [  // bird frames
         { sx: 0,sy: 0}, //asa para cima
@@ -54,11 +57,15 @@ const bird = {
             }
             else{ // morreu
                 ground.move = 0; //para o chão;
-                setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                inicio = true;
+                ground.move = 1; //para o chão;
+                inicio = true;
+
+                /*setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
                     inicio = true;
                     ground.move = 1; //para o chão;
                     inicio = true;
-                },2000);
+                },2000);*/
             }
         }
         else{ //Tela de Início
@@ -121,13 +128,10 @@ const pipe = { // cano
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ -365, -150], //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    alt : [ -300, -300], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    move: 1,
     draw(){
-        //pipe.dy = -90 *(Math.random()+ 1);
-        //Math.floor(Math.random() * (max - min + 1) + min);
-        //console.log(canvas.width);
         if(pipe.dx0 == -52){
-            //console.log("quando o cano desaparece o outro cano está em:" + pipe.dx1);
             pipe.dx0 = pipe.dx1 + 183;
         }
         if(pipe.dx1 == -52){
@@ -138,13 +142,30 @@ const pipe = { // cano
         
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
         ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
-        pipe.dx0--;
-        pipe.dx1--;
+        collision();
+        pipe.dx0 = pipe.dx0 - pipe.move;
+        pipe.dx1 = pipe.dx1 - pipe.move;
     }
 }
-
-let inicio = true; //tela de inicio
-let jump = false; //pular
+function collision(){
+    if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52){
+        //console.log("false");
+        if(bird.dy >= pipe.alt[0] + 400 && bird.dy <= pipe.alt[0] + 480){
+            console.log("false");
+        }
+        else{
+            console.log("true");
+        }
+    }
+    if(bird.dx + 33 >= pipe.dx1  && bird.dx + 33 <= pipe.dx1 + 52){
+        if(bird.dy >= pipe.alt[1] + 400 && bird.dy <= pipe.alt[1] + 480){
+            console.log("false");
+        }
+        else{
+            console.log("true");
+        }
+    }
+}
 
 function loop(){
     window.addEventListener("click", function(){
