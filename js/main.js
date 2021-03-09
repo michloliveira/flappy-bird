@@ -42,9 +42,8 @@ const bird = {
 
         //physic---------------------------------------------------------------------------
         if(inicio == false){//Jogando...
-            //console.log(bird.dy);
-            //console.log("chão:" + ground.dy)
-            if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão
+
+            if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão com o chao
                 if(jump == true){
                     bird.velocity = - bird.pulo;
                     bird.dy = bird.dy + bird.velocity;
@@ -56,14 +55,15 @@ const bird = {
                 }
             }
             else{ // morreu
-                ground.move = 1; //para o chão;
-                inicio = true;
-
-                /*setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                
+                gameOver();
+                
+                /*ground.move = 0;
+                pipe.move = 0;
+                setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
+                    ground.move = 1; 
                     inicio = true;
-                    ground.move = 1; //para o chão;
-                    inicio = true;
-                },2000);*/ 
+                },2000);*/
             }
         }
         else{ //Tela de Início
@@ -130,7 +130,7 @@ const pipe = { // cano
     move: 1,
     draw(){
 
-        if(inicio == 0){
+        if(inicio == false){
             if(pipe.dx0 == -52){
                 pipe.dx0 = pipe.dx1 + 183;
             }
@@ -143,8 +143,10 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
-                ground.move = 0; //para o chão;
-                inicio = true;
+                //jump = false;
+                gameOver();
+                //ground.move = 1; //para o chão;
+                //inicio = true;
                 //alert("GAME OVER");
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
@@ -152,12 +154,12 @@ const pipe = { // cano
         }
         else{
             pipe.dx0 = canvas.width + 183;
-            pipe.dx0 = canvas.width + 183;
+            pipe.dx1 = canvas.width + 366;
         }
     }
 }
 function collision(){
-    if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52){
+    if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52 || bird.dx >= pipe.dx0  && bird.dx <= pipe.dx0 + 52){
         if(bird.dy >= pipe.alt[0] + 400 && bird.dy + bird.dHeight <= pipe.alt[0] + 480){
             return false;
         }
@@ -165,7 +167,7 @@ function collision(){
             return true;
         }
     }
-    if(bird.dx + 33 >= pipe.dx1  && bird.dx + 33 <= pipe.dx1 + 52){
+    if(bird.dx + 33 >= pipe.dx1  && bird.dx + 33 <= pipe.dx1 + 52 || bird.dx >= pipe.dx1  && bird.dx <= pipe.dx1 + 52 ){
         if(bird.dy >= pipe.alt[1] + 400 && bird.dy <= pipe.alt[1] + 480){
             return false;
         }
@@ -178,11 +180,30 @@ function collision(){
     }
 }
 
+function gameOver(){
+    //alert("GAME OVER");
+    //inicio = true;
+    pipe.move = 0;
+    ground.move = 0;
+    ctx.drawImage(sprites,134,153,226,200,(canvas.width /2) - 226 /2, 50,226,200);
+    if(jump == true){
+        inicio = true; 
+        pipe.move =1;
+        ground.move = 1
+        jump = false;
+    }
+
+    /*setTimeout(function(){
+        inicio = true; 
+        pipe.move =1;
+        ground.move = 1
+    }, 1000);*/
+}
 function loop(){
     window.addEventListener("click", function(){
             jump = true;
             //console.log("pulou!")
-    })
+    });
 // event = keyup or keydown
     document.addEventListener('keydown', event => {
         if (event.code === 'Space') {
