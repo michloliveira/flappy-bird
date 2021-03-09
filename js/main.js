@@ -129,24 +129,30 @@ const pipe = { // cano
     alt : [ -430, -430], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
     move: 1,
     draw(){
-        if(pipe.dx0 == -52){
-            pipe.dx0 = pipe.dx1 + 183;
+
+        if(inicio == 0){
+            if(pipe.dx0 == -52){
+                pipe.dx0 = pipe.dx1 + 183;
+            }
+            if(pipe.dx1 == -52){
+                pipe.dx1 = pipe.dx0 + 183;
+            }
+            ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
+            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 480, pipe.dWidth, pipe.dHeight);
+            
+            ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
+            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
+            if(collision()){
+                ground.move = 0; //para o chão;
+                inicio = true;
+                //alert("GAME OVER");
+            }
+            pipe.dx0 = pipe.dx0 - pipe.move;
+            pipe.dx1 = pipe.dx1 - pipe.move;
         }
-        if(pipe.dx1 == -52){
-            pipe.dx1 = pipe.dx0 + 183;
+        else{
+            
         }
-        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
-        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 480, pipe.dWidth, pipe.dHeight);
-        
-        ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
-        ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
-        if(collision()){
-            ground.move = 0; //para o chão;
-            inicio = true;
-            //alert("GAME OVER");
-        }
-        pipe.dx0 = pipe.dx0 - pipe.move;
-        pipe.dx1 = pipe.dx1 - pipe.move;
     }
 }
 function collision(){
