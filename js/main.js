@@ -151,7 +151,8 @@ const pipe = { // cano
             pipe.dx1 = pipe.dx1 - pipe.move;
         }
         else{
-            
+            pipe.dx0 = canvas.width + 183;
+            pipe.dx0 = canvas.width + 183;
         }
     }
 }
