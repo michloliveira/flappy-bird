@@ -56,8 +56,6 @@ const bird = {
                 }
             }
             else{ // morreu
-                ground.move = 0; //para o chão;
-                inicio = true;
                 ground.move = 1; //para o chão;
                 inicio = true;
 
@@ -65,7 +63,7 @@ const bird = {
                     inicio = true;
                     ground.move = 1; //para o chão;
                     inicio = true;
-                },2000);*/
+                },2000);*/ 
             }
         }
         else{ //Tela de Início
@@ -128,7 +126,7 @@ const pipe = { // cano
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ -300, -300], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    alt : [ -430, -430], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
     move: 1,
     draw(){
         if(pipe.dx0 == -52){
@@ -142,28 +140,34 @@ const pipe = { // cano
         
         ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
         ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
-        collision();
+        if(collision()){
+            ground.move = 0; //para o chão;
+            inicio = true;
+            //alert("GAME OVER");
+        }
         pipe.dx0 = pipe.dx0 - pipe.move;
         pipe.dx1 = pipe.dx1 - pipe.move;
     }
 }
 function collision(){
     if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52){
-        //console.log("false");
-        if(bird.dy >= pipe.alt[0] + 400 && bird.dy <= pipe.alt[0] + 480){
-            console.log("false");
+        if(bird.dy >= pipe.alt[0] + 400 && bird.dy + bird.dHeight <= pipe.alt[0] + 480){
+            return false;
         }
         else{
-            console.log("true");
+            return true;
         }
     }
     if(bird.dx + 33 >= pipe.dx1  && bird.dx + 33 <= pipe.dx1 + 52){
         if(bird.dy >= pipe.alt[1] + 400 && bird.dy <= pipe.alt[1] + 480){
-            console.log("false");
+            return false;
         }
         else{
-            console.log("true");
+            return true;
         }
+    }
+    else{
+        return false;
     }
 }
 
@@ -178,7 +182,7 @@ function loop(){
         //console.log('Space pressed')
         jump = true;
     }
-  })
+  });
     background.draw();
     pipe.draw();
     ground.draw();
