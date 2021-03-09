@@ -181,8 +181,6 @@ function collision(){
 }
 
 function gameOver(){
-    //alert("GAME OVER");
-    //inicio = true;
     pipe.move = 0;
     ground.move = 0;
     ctx.drawImage(sprites,134,153,226,200,(canvas.width /2) - 226 /2, 50,226,200);
@@ -192,12 +190,6 @@ function gameOver(){
         ground.move = 1
         jump = false;
     }
-
-    /*setTimeout(function(){
-        inicio = true; 
-        pipe.move =1;
-        ground.move = 1
-    }, 1000);*/
 }
 function loop(){
     window.addEventListener("click", function(){
