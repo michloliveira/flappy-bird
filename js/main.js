@@ -45,7 +45,7 @@ const bird = {
         if(inicio == false){//Jogando...
 
             if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão com o chao
-                if(jump == true && isDead == false){
+                if(jump == true && isDead == false && bird.dy > 0){
                     bird.velocity = - bird.pulo;
                     bird.dy = bird.dy + bird.velocity;
                     jump = false;          
