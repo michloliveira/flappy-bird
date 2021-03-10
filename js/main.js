@@ -143,7 +143,7 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
-                //jump = false;
+                jump = false;
                 gameOver();
                 //ground.move = 1; //para o chão;
                 //inicio = true;
