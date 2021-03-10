@@ -8,6 +8,7 @@ const ctx = canvas.getContext('2d');
 
 let inicio = true; //tela de inicio
 let jump = false; //pular
+let isDead = false;
 
 const bird = {
     sXY: [  // bird frames
@@ -44,7 +45,7 @@ const bird = {
         if(inicio == false){//Jogando...
 
             if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão com o chao
-                if(jump == true){
+                if(jump == true && isDead == false){
                     bird.velocity = - bird.pulo;
                     bird.dy = bird.dy + bird.velocity;
                     jump = false;          
@@ -57,7 +58,7 @@ const bird = {
             else{ // morreu
                 
                 gameOver();
-                
+                isDead = false;
                 /*ground.move = 0;
                 pipe.move = 0;
                 setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
@@ -126,7 +127,7 @@ const pipe = { // cano
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ -430, -430], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    alt : [ -365, -150], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
     move: 1,
     draw(){
 
@@ -143,11 +144,7 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
-                jump = false;
-                gameOver();
-                //ground.move = 1; //para o chão;
-                //inicio = true;
-                //alert("GAME OVER");
+                isDead = true;
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
             pipe.dx1 = pipe.dx1 - pipe.move;
