@@ -181,17 +181,17 @@ function gameOver(){
         jump = false;
     }
 }
-function loop(){
-    window.addEventListener("click", function(){
-            jump = true;
-    });
-// event = keyup or keydown
-    document.addEventListener('keydown', event => {
-        if (event.code === 'Space') {
-        //console.log('Space pressed')
+window.addEventListener("click", function(){
         jump = true;
-    }
-  });
+});
+// event = keyup or keydown
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space') {
+    //console.log('Space pressed')
+    jump = true;
+}
+});
+function loop(){
     background.draw();
     pipe.draw();
     ground.draw();
