@@ -1,14 +1,13 @@
-console.log("klasdnasdl");
-
+console.log("Michel Tavares de Oliveira");
 const sprites = new Image(); //inicializa uma sprite
 sprites.src = "./img/sprites.png"; //carrega a imagem base
 
 const canvas = document.querySelector('canvas'); //retorna o primeiro elemento do seletor buscado
 const ctx = canvas.getContext('2d');
 
-let inicio = true; //tela de inicio
-let jump = false; //pular
-let isDead = false;
+var inicio = true; //tela de inicio
+var jump = false; //pular
+var isDead = false;
 
 const bird = {
     sXY: [  // bird frames
@@ -59,12 +58,6 @@ const bird = {
                 
                 gameOver();
                 isDead = false;
-                /*ground.move = 0;
-                pipe.move = 0;
-                setTimeout(()=>{   //ES6 , equivalente a setTimeout(function(){},1000)
-                    ground.move = 1; 
-                    inicio = true;
-                },2000);*/
             }
         }
         else{ //Tela de Início
@@ -191,7 +184,6 @@ function gameOver(){
 function loop(){
     window.addEventListener("click", function(){
             jump = true;
-            //console.log("pulou!")
     });
 // event = keyup or keydown
     document.addEventListener('keydown', event => {
