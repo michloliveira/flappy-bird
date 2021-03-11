@@ -43,7 +43,7 @@ const bird = {
         //physic---------------------------------------------------------------------------
         if(inicio == false){//Jogando...
 
-            if(bird.dy + bird.dHeight <= ground.dy){ //verificando colisão com o chao
+            if(bird.dy + bird.dHeight <= ground.dy){ //pulo 
                 if(jump == true && isDead == false && bird.dy > 0){
                     bird.velocity = - bird.pulo;
                     bird.dy = bird.dy + bird.velocity;
@@ -52,6 +52,7 @@ const bird = {
                 else{
                     bird.velocity = bird.velocity + bird.gravity;
                     bird.dy = bird.dy + bird.velocity;
+                    jump = false;
                 }
             }
             else{ // morreu
