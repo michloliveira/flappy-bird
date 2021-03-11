@@ -120,25 +120,35 @@ const pipe = { // cano
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ -365, -150], //#-365,-150 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
+    alt : [ 0,], //#-370,-140 //inicializa com alturas aleatótias dois canos, com a função  Math.floor(Math.random() * (max - min + 1) + min);
     move: 1,
     draw(){
+        if( inicio == true){ //gerador de alturas aleatórias
+            console.log("gerou!");
+            pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+            pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+        }
 
         if(inicio == false){
-            if(pipe.dx0 == -52){
+            if(pipe.dx0 == -52 || pipe.alt[0] == 0){
+                console.log(pipe.alt[0]);
                 pipe.dx0 = pipe.dx1 + 183;
+                //Math.floor(Math.random() * -370;
+                pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
             if(pipe.dx1 == -52){
                 pipe.dx1 = pipe.dx0 + 183;
+                pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+               // pipe.alt[1] = Math.floor(Math.random() * (-140 - 370 + 1) + 140);
             }
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 480, pipe.dWidth, pipe.dHeight);
             
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
-            if(collision()){
+           /* if(collision()){
                 isDead = true;
-            }
+            }*/
             pipe.dx0 = pipe.dx0 - pipe.move;
             pipe.dx1 = pipe.dx1 - pipe.move;
         }
@@ -181,6 +191,9 @@ function gameOver(){
         jump = false;
     }
 }
+pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370; //gera uma altura aleatória inicial
+pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+
 window.addEventListener("click", function(){
         jump = true;
 });
