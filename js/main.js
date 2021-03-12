@@ -8,7 +8,6 @@ const ctx = canvas.getContext('2d');
 var inicio = true; //tela de inicio
 var jump = false; //pular
 var isDead = false;
-
 const bird = {
     sXY: [  // bird frames
         { sx: 0,sy: 0}, //asa para cima
@@ -156,6 +155,24 @@ const pipe = { // cano
         }
     }
 }
+const placar = {
+    pontos: 0,
+    
+    draw(){
+        console.log(canvas.width);
+        ctx.font = "50px 'Bebas Neue'";
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "#000000";
+        ctx.shadowOffsetX = "2"
+        ctx.shadowOffsetY = "2"
+        //ctx.shadowBlur = "10"
+        //ctx.fillText
+        ctx.fillText(placar.pontos,160,64);
+        ctx.textAlign = "center"
+        ctx.shadowOffsetX = "0"
+        ctx.shadowOffsetY = "0"
+    }
+}
 function collision(){
     if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52 || bird.dx >= pipe.dx0  && bird.dx <= pipe.dx0 + 52){
         if(bird.dy >= pipe.alt[0] + 400 && bird.dy + bird.dHeight <= pipe.alt[0] + 480){
@@ -205,6 +222,7 @@ function loop(){
     pipe.draw();
     ground.draw();
     bird.draw();
+    placar.draw();
     requestAnimationFrame(loop);
 }
 
