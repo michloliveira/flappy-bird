@@ -164,13 +164,12 @@ const score = {
     best: 0,
     show: true,
     draw(){
-        //console.log(canvas.width);
         if(inicio == true){
             score.show = true;
             score.now = 0;
         }
         if(score.show == true){
-            if(bird.dx == pipe.dx0){
+            if(bird.dx == pipe.dx0 || bird.dx == pipe.dx1){  // score ++
                 score.now++;
             }
             ctx.font = "50px 'Bebas Neue'";
