@@ -171,6 +171,9 @@ const score = {
         if(score.show == true){
             if(bird.dx == pipe.dx0 || bird.dx == pipe.dx1){  // score ++
                 score.now++;
+                if(score.best < score.now){
+                    score.best = score.now;
+                }
             }
             ctx.font = "50px 'Bebas Neue'";
             ctx.fillStyle = "#ffffff";
@@ -180,9 +183,10 @@ const score = {
             ctx.textAlign = "center"
             //ctx.shadowBlur = "10"
             //ctx.fillText
-            ctx.fillText(score.now,160,64);
+            ctx.fillText(score.now,160,75); //desaplicando os efeitos
             ctx.shadowOffsetX = "0"
             ctx.shadowOffsetY = "0"
+            ctx.textAlign = "center"
         }
     }
 }
@@ -213,6 +217,22 @@ function gameOver(){
     pipe.move = 0;
     ground.move = 0;
     ctx.drawImage(sprites,134,153,226,200,(canvas.width /2) - 226 /2, 50,226,200);
+    //------score
+    ctx.font = "30px 'Bebas Neue'";
+    ctx.fillStyle = "#ffffff";
+    ctx.shadowColor = "#000000";
+    ctx.shadowOffsetX = "2"
+    ctx.shadowOffsetY = "2"
+    ctx.textAlign = "right"
+    //ctx.shadowBlur = "10"
+    //ctx.fillText
+    ctx.fillText(score.now,246,148);
+    ctx.fillText(score.best,246,190);
+    ctx.shadowOffsetX = "0"
+    ctx.shadowOffsetY = "0"
+
+
+
     if(jump == true){
         inicio = true; 
         pipe.move =2;
