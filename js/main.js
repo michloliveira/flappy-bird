@@ -148,7 +148,7 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
-                //isDead = true;
+                isDead = true;
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
             pipe.dx1 = pipe.dx1 - pipe.move;
