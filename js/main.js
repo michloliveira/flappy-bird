@@ -7,7 +7,8 @@ const ctx = canvas.getContext('2d');
 
 var inicio = true; //tela de inicio
 var jump = false; //pular
-var isDead = false;
+var isDead = false; //retira o pulo
+
 const bird = {
     sXY: [  // bird frames
         { sx: 0,sy: 0}, //asa para cima
@@ -19,8 +20,8 @@ const bird = {
     fps: 0, //controle do frame
     sWidth: 33, //origem largura - source width
     sHeight: 24, //origem altura - source height
-    dx: 50, //destino X - destination X
-    dy: 33, //destino Y - destination Y
+    dx: 80, //destino X - destination X
+    dy: 180, //destino Y - destination Y
     dWidth: 33, //destino largura - destination width
     dHeight: 24, //destino Altura = Destination height
     gravity: 0.25,
@@ -64,7 +65,7 @@ const bird = {
             if(jump == true){
                 inicio = false;
             }
-            bird.dy = 33;
+            bird.dy = 180;
             bird.velocity = 0;
             ctx.drawImage(sprites, 134, 0, 174, 152, canvas.width/2 - 87, 110, 174, 152);
         }
@@ -79,13 +80,13 @@ const ground = {
     dy: canvas.height -112, //destino Y - destination Y
     dWidth: 224, //destino largura - destination width
     dHeight: 112, //destino Altura = Destination height
-    move: 1, //velocidade de movimentação do chão
+    move: 2, //velocidade de movimentação do chão
     
     draw(){
             ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx, ground.dy, ground.dWidth, ground.dHeight);
             ctx.drawImage(sprites, ground.sx, ground.sy, ground.sWidth, ground.sHeight, ground.dx + ground.dHeight, ground.dy, ground.dWidth, ground.dHeight);
             
-        if(ground.move == 1){ // movimenta o chão
+        if(ground.move == 2){ // movimenta o chão
             ground.dx = ground.dx - ground.move;
         }
 
@@ -115,13 +116,13 @@ const pipe = { // cano
     sy: 169 ,//origem Y - source y
     sWidth: 52, //origem largura - source width 104
     sHeight: 400, //origem altura - source height 400
-    dx0: canvas.width + 183, //destino X - destination X cano 1
-    dx1: canvas.width + 366, //destino X - destination X cano 2 //olhar amanha
+    dx0: canvas.width + 184, //destino X - destination X cano 1
+    dx1: canvas.width + 368, //destino X - destination X cano 2 //olhar amanha
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
-    alt : [ 0,0], //cano 1 , cano 2;
-    move: 1,
+    alt : [0,0], //cano 1 , cano 2;
+    move: 2,
     draw(){
         if( inicio == true){ //gerador de alturas aleatórias
             pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
@@ -130,12 +131,15 @@ const pipe = { // cano
         }
 
         if(inicio == false){
-            if(pipe.dx0 == -52){ // se o cano sair da tela 
-                pipe.dx0 = pipe.dx1 + 183;
+            //console.log(pipe.dx0);
+            if(pipe.dx0 <= -52){ // se o cano sair da tela 
+                console.log(pipe.dx0);
+                pipe.dx0 = pipe.dx1 + 184; //era 83
                 pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
-            if(pipe.dx1 == -52){ // se o cano sair da tela
-                pipe.dx1 = pipe.dx0 + 183;
+            if(pipe.dx1 <= -52){ // se o cano sair da tela
+                console.log(pipe.dx1);
+                pipe.dx1 = pipe.dx0 + 184; //era 83
                 pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
@@ -144,7 +148,7 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
-                isDead = true;
+                //isDead = true;
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
             pipe.dx1 = pipe.dx1 - pipe.move;
@@ -155,22 +159,29 @@ const pipe = { // cano
         }
     }
 }
-const placar = {
-    pontos: 0,
-    
+const score = {
+    now: 0,
+    best: 0,
+    show: true,
     draw(){
-        console.log(canvas.width);
-        ctx.font = "50px 'Bebas Neue'";
-        ctx.fillStyle = "#ffffff";
-        ctx.shadowColor = "#000000";
-        ctx.shadowOffsetX = "2"
-        ctx.shadowOffsetY = "2"
-        //ctx.shadowBlur = "10"
-        //ctx.fillText
-        ctx.fillText(placar.pontos,160,64);
-        ctx.textAlign = "center"
-        ctx.shadowOffsetX = "0"
-        ctx.shadowOffsetY = "0"
+        //console.log(canvas.width);
+        if(inicio == true){
+            score.show = true;
+            score.now = 0;
+        }
+        if(score.show == true){
+            ctx.font = "50px 'Bebas Neue'";
+            ctx.fillStyle = "#ffffff";
+            ctx.shadowColor = "#000000";
+            ctx.shadowOffsetX = "2"
+            ctx.shadowOffsetY = "2"
+            ctx.textAlign = "center"
+            //ctx.shadowBlur = "10"
+            //ctx.fillText
+            ctx.fillText(score.now,160,64);
+            ctx.shadowOffsetX = "0"
+            ctx.shadowOffsetY = "0"
+        }
     }
 }
 function collision(){
@@ -196,13 +207,14 @@ function collision(){
 }
 
 function gameOver(){
+    score.show = false;
     pipe.move = 0;
     ground.move = 0;
     ctx.drawImage(sprites,134,153,226,200,(canvas.width /2) - 226 /2, 50,226,200);
     if(jump == true){
         inicio = true; 
-        pipe.move =1;
-        ground.move = 1
+        pipe.move =2;
+        ground.move = 2
         jump = false;
     }
 }
@@ -222,7 +234,7 @@ function loop(){
     pipe.draw();
     ground.draw();
     bird.draw();
-    placar.draw();
+    score.draw();
     requestAnimationFrame(loop);
 }
 
