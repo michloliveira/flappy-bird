@@ -116,8 +116,8 @@ const pipe = { // cano
     sy: 169 ,//origem Y - source y
     sWidth: 52, //origem largura - source width 104
     sHeight: 400, //origem altura - source height 400
-    dx0: canvas.width + 184, //destino X - destination X cano 1
-    dx1: canvas.width + 368, //destino X - destination X cano 2 //olhar amanha
+    dx0: canvas.width + 134, //destino X - destination X cano 1
+    dx1: canvas.width + 320, //destino X - destination X cano 2 //olhar amanha
     dy: -90, //destino Y - destination Y
     dWidth: 52, //destino largura - destination width
     dHeight: 400, //destino Altura = Destination height,
@@ -134,12 +134,12 @@ const pipe = { // cano
             //console.log(pipe.dx0);
             if(pipe.dx0 <= -52){ // se o cano sair da tela 
                 console.log(pipe.dx0);
-                pipe.dx0 = pipe.dx1 + 184; //era 83
+                pipe.dx0 = pipe.dx1 + 186; //era 83
                 pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
             if(pipe.dx1 <= -52){ // se o cano sair da tela
                 console.log(pipe.dx1);
-                pipe.dx1 = pipe.dx0 + 184; //era 83
+                pipe.dx1 = pipe.dx0 + 186; //era 83
                 pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
@@ -154,8 +154,8 @@ const pipe = { // cano
             pipe.dx1 = pipe.dx1 - pipe.move;
         }
         else{
-            pipe.dx0 = canvas.width + 183;
-            pipe.dx1 = canvas.width + 366;
+            pipe.dx0 = canvas.width + 134;
+            pipe.dx1 = canvas.width + 320;
         }
     }
 }
@@ -170,6 +170,9 @@ const score = {
             score.now = 0;
         }
         if(score.show == true){
+            if(bird.dx == pipe.dx0){
+                score.now++;
+            }
             ctx.font = "50px 'Bebas Neue'";
             ctx.fillStyle = "#ffffff";
             ctx.shadowColor = "#000000";
