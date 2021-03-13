@@ -5,6 +5,15 @@ sprites.src = "./img/sprites.png"; //carrega a imagem base
 const canvas = document.querySelector('canvas'); //retorna o primeiro elemento do seletor buscado
 const ctx = canvas.getContext('2d');
 
+const hit = new Audio();
+const flappy = new Audio();
+const falls = new Audio();
+const scoreUp = new Audio();
+hit.src = "./audio/hit.wav"
+flappy.src = "./audio/flappy.wav"
+falls.src = "./audio/falls.wav"
+scoreUp.src = "./audio/score.wav"
+
 var inicio = true; //tela de inicio
 var jump = false; //pular
 var isDead = false; //retira o pulo
