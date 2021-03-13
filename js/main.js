@@ -136,8 +136,8 @@ const pipe = { // cano
     move: 2,
     draw(){
         if( inicio == true){ //gerador de alturas aleatórias
-            pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
-            pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+            pipe.alt[0] = Math.floor(Math.random() * (-147 - -370 + 1)) + -370;
+            pipe.alt[1] = Math.floor(Math.random() * (-147 - -370 + 1)) + -370;
             //Math.floor(Math.random() * (max - min + 1) + min);
         }
 
@@ -146,17 +146,17 @@ const pipe = { // cano
             if(pipe.dx0 <= -52){ // se o cano sair da tela 
                 console.log(pipe.dx0);
                 pipe.dx0 = pipe.dx1 + 186; //era 83
-                pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+                pipe.alt[0] = Math.floor(Math.random() * (-147 - -370 + 1)) + -370;
             }
             if(pipe.dx1 <= -52){ // se o cano sair da tela
                 pipe.dx1 = pipe.dx0 + 186; //era 83
-                pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
+                pipe.alt[1] = Math.floor(Math.random() * (-147 - -370 + 1)) + -370;
             }
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0], pipe.dWidth, pipe.dHeight);
-            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 480, pipe.dWidth, pipe.dHeight);
+            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx0, pipe.alt[0] + 485, pipe.dWidth, pipe.dHeight);
             
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
-            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
+            ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 485, pipe.dWidth, pipe.dHeight);
             if(collision()){
                 if(isDead == false && ground.move != 0){ //som
                     hit.play();
@@ -164,6 +164,8 @@ const pipe = { // cano
                         falls.play();
                     },500);
                 }
+                pipe.move = 0;
+                ground.move = 0;
                 isDead = true;
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
@@ -209,7 +211,7 @@ const score = {
 }
 function collision(){
     if(bird.dx + 33 >= pipe.dx0  && bird.dx + 33 <= pipe.dx0 + 52 || bird.dx >= pipe.dx0  && bird.dx <= pipe.dx0 + 52){
-        if(bird.dy >= pipe.alt[0] + 400 && bird.dy + bird.dHeight <= pipe.alt[0] + 480){
+        if(bird.dy >= pipe.alt[0] + 400 && bird.dy + bird.dHeight <= pipe.alt[0] + 485){
             return false;
         }
         else{
@@ -217,7 +219,7 @@ function collision(){
         }
     }
     if(bird.dx + 33 >= pipe.dx1  && bird.dx + 33 <= pipe.dx1 + 52 || bird.dx >= pipe.dx1  && bird.dx <= pipe.dx1 + 52 ){
-        if(bird.dy >= pipe.alt[1] + 400 && bird.dy <= pipe.alt[1] + 480){
+        if(bird.dy >= pipe.alt[1] + 400 && bird.dy <= pipe.alt[1] + 485){
             return false;
         }
         else{
