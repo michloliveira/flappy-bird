@@ -200,8 +200,6 @@ const score = {
             ctx.shadowOffsetX = "2"
             ctx.shadowOffsetY = "2"
             ctx.textAlign = "center"
-            //ctx.shadowBlur = "10"
-            //ctx.fillText
             ctx.fillText(score.now,160,75); //desaplicando os efeitos
             ctx.shadowOffsetX = "0"
             ctx.shadowOffsetY = "0"
