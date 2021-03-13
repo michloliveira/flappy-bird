@@ -1,4 +1,3 @@
-console.log("Michel Tavares de Oliveira");
 const sprites = new Image(); //inicializa uma sprite
 sprites.src = "./img/sprites.png"; //carrega a imagem base
 
@@ -235,6 +234,19 @@ function gameOver(){
     pipe.move = 0;
     ground.move = 0;
     ctx.drawImage(sprites,134,153,226,200,(canvas.width /2) - 226 /2, 50,226,200);
+    if(score.now >= 10 && score.now < 20){//bronze
+        ctx.drawImage(sprites,47,123,45,45,72,135,45,45);
+    }
+    else if(score.now >= 20 && score.now < 30){//prata
+        ctx.drawImage(sprites,47,78,45,45,72,135,45,45);
+    }
+    else if(score.now >= 30 && score.now < 40){ //ouro
+        ctx.drawImage(sprites,0,123,45,45,72,135,45,45);
+    }
+    else if(score.now >= 40){ //platina
+        ctx.drawImage(sprites,0,78,45,45,72,135,45,45);
+    }
+    
     //------score
     ctx.font = "30px 'Bebas Neue'";
     ctx.fillStyle = "#ffffff";
