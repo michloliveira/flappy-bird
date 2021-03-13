@@ -51,12 +51,13 @@ const bird = {
 
         //physic---------------------------------------------------------------------------
         if(inicio == false){//Jogando...
-
-            if(bird.dy + bird.dHeight <= ground.dy){ //pulo 
+            if(bird.dy + bird.dHeight <= ground.dy){ //pulo
                 if(jump == true && isDead == false && bird.dy > 0){
                     bird.velocity = - bird.pulo;
                     bird.dy = bird.dy + bird.velocity;
-                    jump = false;          
+                    flappy.play();
+                    jump = false; 
+                    flappy.currentTime = 0;     
                 }
                 else{
                     bird.velocity = bird.velocity + bird.gravity;
@@ -65,7 +66,9 @@ const bird = {
                 }
             }
             else{ // morreu
-                
+                if(isDead == false && score.show == true){ // somente se o score está exibido
+                    hit.play();
+                }
                 gameOver();
                 isDead = false;
             }
@@ -147,7 +150,6 @@ const pipe = { // cano
                 pipe.alt[0] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
             if(pipe.dx1 <= -52){ // se o cano sair da tela
-                console.log(pipe.dx1);
                 pipe.dx1 = pipe.dx0 + 186; //era 83
                 pipe.alt[1] = Math.floor(Math.random() * (-140 - -370 + 1)) + -370;
             }
@@ -157,6 +159,12 @@ const pipe = { // cano
             ctx.drawImage(sprites, pipe.sx, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1,pipe.alt[1], pipe.dWidth, pipe.dHeight);
             ctx.drawImage(sprites, pipe.sx -52, pipe.sy, pipe.sWidth, pipe.sHeight, pipe.dx1, pipe.alt[1] + 480, pipe.dWidth, pipe.dHeight);
             if(collision()){
+                if(isDead == false && ground.move != 0){ //som
+                    hit.play();
+                    setTimeout(()=>{
+                        falls.play();
+                    },500);
+                }
                 isDead = true;
             }
             pipe.dx0 = pipe.dx0 - pipe.move;
@@ -180,6 +188,7 @@ const score = {
         if(score.show == true){
             if(bird.dx == pipe.dx0 || bird.dx == pipe.dx1){  // score ++
                 score.now++;
+                scoreUp.play();
                 if(score.best < score.now){
                     score.best = score.now;
                 }
@@ -239,8 +248,6 @@ function gameOver(){
     ctx.fillText(score.best,246,190);
     ctx.shadowOffsetX = "0"
     ctx.shadowOffsetY = "0"
-
-
 
     if(jump == true){
         inicio = true; 
