@@ -32,9 +32,9 @@ const bird = {
     dy: 180, //destino Y - destination Y
     dWidth: 33, //destino largura - destination width
     dHeight: 24, //destino Altura = Destination height
-    gravity: 0.25,
+    gravity: 0.27,
     velocity: 0,
-    pulo: 4.5,
+    pulo: 4.6,
     draw(){
         ctx.drawImage(sprites, bird.sXY[bird.frame].sx, bird.sXY[bird.frame].sy, bird.sWidth, bird.sHeight, bird.dx, bird.dy, bird.dWidth, bird.dHeight); //desenha na tela
         if(bird.fps == 10 && ground.move){ //atualiza asa do bird a cada 10 fps e se o chão estiver se movendo
