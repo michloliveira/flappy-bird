@@ -195,7 +195,7 @@ const score = {
                 if(score.best < score.now){
                     score.best = score.now;
                 }
-            }
+            }    
             ctx.font = "50px 'Bebas Neue'";
             ctx.fillStyle = "#ffffff";
             ctx.shadowColor = "#000000";
