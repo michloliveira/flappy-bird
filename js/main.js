@@ -188,8 +188,10 @@ const score = {
         }
         if(score.show == true){
             if(bird.dx == pipe.dx0 || bird.dx == pipe.dx1){  // score ++
-                score.now++;
-                scoreUp.play();
+                if(collision() != true){
+                    score.now++;
+                    scoreUp.play();
+                }
                 if(score.best < score.now){
                     score.best = score.now;
                 }
