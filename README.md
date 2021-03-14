@@ -1,3 +1,8 @@
 # Flappy Bird
-<h3>Building Flappy Bird game in JavaScript</h3>
-<img src="https://i0.wp.com/unity3d.college/wp-content/uploads/2015/10/flappy-bird-game-screens.jpg?resize=982%2C560&ssl=1" alt="some text" height=220px>
+<h3>Flappy Bird game in JavaScript</h3>
+<img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="some text" height=220px>
+<h4>Controls:</h4>
+<ul>
+  <li>Up ⇑ = Touch or space key</li>
+</ul>
+<a href="https://michloliveira.github.io/flappy-bird">Play Game</a>
